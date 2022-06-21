@@ -266,6 +266,12 @@ p {
     color:hsl(var(--color-white), .5);
 }
 
+@supports not (backdrop-filter: blur(60px)) {
+    .navbar {
+        background-color: hsl(var(--color-dark), .9);
+    }
+}
+
 .navbar span {
     color:hsl(var(--color-white));
     margin-right: 1rem;

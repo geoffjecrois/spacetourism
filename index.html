@@ -18,17 +18,17 @@
     <header class="flex" style="justify-content:space-between">
       <div class="logo"></div>
       <button class="navbar-toggle" aria-expanded="false"></button>
-      <nav class="primary-navigation" >
+      <nav class="primary-navigation">
         <ul class="navbar flex fs-400 ff-sans-cond letter-spacing-3 uppercase">
-          <li class="active"><a href="#"><span>00</span>HOME</a></li>
-          <li><a href="#"><span>01</span>DESTINATION</a></li>
-          <li><a href="#"><span>02</span>CREW</a></li>
-          <li><a href="#"><span>03</span>TECHNOLOGY</a></li>
+          <li><a class="navbar-btn active"  data-btn="home" href="#"><span>00</span>HOME</a></li>
+          <li><a class="navbar-btn" data-btn="destination" href="#"><span>01</span>DESTINATION</a></li>
+          <li><a class="navbar-btn"  data-btn="crew"href="#"><span>02</span>CREW</a></li>
+          <li><a class="navbar-btn" data-btn="technology" href="#"><span>03</span>TECHNOLOGY</a></li>
         </ul>
       </nav>
     </header>
 
-  <main class="container container--home flex">
+  <main class="container container--home grid" data-page="home" >
 
     <div>
       <h1> 
@@ -46,5 +46,42 @@
   </main>
 
 
+
+
+
+  <main class="container container--destination grid flow" data-page="destination" hidden>
+    <p class="numbered-titles text-white ff-sans-cond letter-spacing-2 uppercase fs-500"><span>01</span>Pick your destination</p>
+    <picture>
+      <img src="./assets/destination/image-moon.webp" alt="the moon">
+    </picture>
+    <ul class="tabs flex fs-300 ff-sans-cond letter-spacing-3 uppercase">
+    </ul>
+    <article class="flow">
+    </article>
+  </main>
+
+
+
+
+
+
+
+
+  <main class="container" data-page="crew" hidden>
+    <h1> 
+      <p class="text-light ff-sans-cond letter-spacing-2 fs-600 uppercase">Lorem ipsum dolor sit amet.</p>
+      <p class="text-white uppercase ff-serif fs-900 small-lh">lorem 3</p>
+    </h1>
+
+  </main>
+
+
+  <main class="container" data-page="technology" hidden>
+    <h1> 
+      <p class="text-light ff-sans-cond letter-spacing-2 fs-600 uppercase">Lorem ipsum dolor sit amet.</p>
+      <p class="text-white uppercase ff-serif fs-900 small-lh">lorem 4</p>
+    </h1>
+
+  </main>
 </body>
 </html>

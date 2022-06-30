@@ -1,3 +1,5 @@
+// mobile nav bar
+
 const navToggle = document.querySelector('.navbar-toggle');
 const navBar = document.querySelector('.primary-navigation');
 
@@ -13,3 +15,112 @@ navToggle.addEventListener('click', () => {
 
     }
 })
+
+
+//navigation
+
+const navBtns = document.querySelectorAll('.navbar-btn');
+
+navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        navBtns.forEach(btn => btn.classList.remove('active'));
+        btn.classList.add('active');
+
+    document.querySelectorAll('main').forEach(el => el.hidden = true);  
+        
+
+    let pageToDisplayName = btn.getAttribute('data-btn');
+
+    let pageToDisplay = document.querySelector(`[data-page="${pageToDisplayName}"]`);
+    pageToDisplay.hidden = false;
+    changeBackgroundImage(pageToDisplayName);
+
+    });
+
+});
+
+//background img change
+const body = document.querySelector('body');
+
+function changeBackgroundImage(name) {
+    if (window.matchMedia("(min-width: 35rem)").matches)
+    {body.style.backgroundImage = `url(./assets/${name}/background-${name}-tablet.jpg)`}
+    if (window.matchMedia("(min-width: 45rem)").matches)
+    {body.style.backgroundImage = `url(./assets/${name}/background-${name}-desktop.jpg)`}
+    else {body.style.backgroundImage = `url(./assets/${name}/background-${name}-mobile.jpg)`}
+
+}
+
+const activePage = document.querySelector('main:not([hidden])')
+changeBackgroundImage(activePage.getAttribute("data-page"))
+console.log(activePage)
+
+
+const tabsContainer = document.querySelector('.tabs');
+const tabs = document.querySelectorAll('.tabs li');
+
+
+
+async function createDestinationTabs() {
+    const data = await fetchData();
+    const destinationsData = data.destinations
+
+    destinationsData.forEach( dest => {
+        tabsContainer.innerHTML += `<li>${dest.name}</li>`
+    })
+    //add the active class on the first tab
+    tabsContainer.firstChild.nextElementSibling.classList.add('active')
+
+    tabsContainer.addEventListener("click", event => {
+        document.querySelectorAll('.tabs li')
+                .forEach(el => el.classList.remove('active'));
+        event.target.classList.add('active');
+        createDestinationArticle();
+    })
+}
+
+createDestinationTabs();
+
+async function createDestinationArticle() {
+    const data = await fetchData();
+    const destinationsData = data.destinations
+    let planet = tabsContainer.querySelector('.active').innerHTML.toLowerCase();
+    const planetData = destinationsData.filter(obj => obj.name.toLowerCase() === planet )[0];
+
+
+    const article = document.querySelector('article');
+    const planetImg = document.querySelector('img');
+
+    planetImg.setAttribute("src", planetData.images.webp); //ajouter le changement d'image responsive
+    article.innerHTML = `<h1 class="ff-serif text-white fs-800 small-lh uppercase planet-name">${planetData.name}</h1>
+    <p class="text-light ff-sans fs-400 letter-spacing-2 big-lh planet-infos">${planetData.description}</p>
+    <div class="divider"></div>
+    <div class="distance">
+    <p class="text-light fs-500 ff-sans-cond uppercase ">avg. distance</p>
+    <p class=" text-white fs-600 ff-serif letter-spacing-2 uppercase">${planetData.distance}</p>
+    </div>
+    <div class="travel">
+    <p class="text-light fs-500 ff-sans-cond uppercase">est.travel time</p>
+    <p class=" text-white fs-600 ff-serif letter-spacing-2 uppercase">${planetData.travel}</p>
+    </div>`
+
+
+}
+
+createDestinationArticle();
+
+
+
+async function fetchData() {
+    const response = await fetch("./data.json");
+    try {
+        const data = await response.json();
+        return data
+    } catch (e) {
+        console.log('error', e)
+    }
+
+}
+
+
+
